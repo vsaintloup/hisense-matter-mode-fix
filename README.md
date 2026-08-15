@@ -14,10 +14,10 @@ it adds only `(vendor_id=0x138C, product_id=0x3601)` to Core's Dry and Fan-only
 allowlists during startup. It neither creates a second climate entity nor
 communicates with the appliance itself.
 
-For this appliance only, it also turns on Matter's separate On/Off cluster
-when `dry` or `fan_only` is selected while the A/C is off. This is necessary
-because the appliance otherwise accepts the Thermostat mode while remaining
-powered off.
+For this appliance only, it also sends Matter's standard `On` command before
+selecting `dry` or `fan_only` while the A/C is off. This is necessary because
+the appliance otherwise accepts the Thermostat mode while remaining powered
+off.
 
 ## Compatibility
 
