@@ -8,8 +8,12 @@ capability flag in its Matter Thermostat feature map, even though the appliance
 accepts both Matter `SystemMode` values. Home Assistant Core therefore removes
 those modes before the command can reach the appliance.
 
-This integration applies the narrow workaround proposed in
-[home-assistant/core#176256](https://github.com/home-assistant/core/issues/176256):
+This repository exists because [home-assistant/core#176256](https://github.com/home-assistant/core/issues/176256),
+which documents this exact device issue, has remained without a substantive
+response since it was opened. It provides a practical interim workaround while
+the upstream issue remains unresolved.
+
+This integration applies the narrow workaround proposed in that issue:
 it adds only `(vendor_id=0x138C, product_id=0x3601)` to Core's Dry and Fan-only
 allowlists during startup. It neither creates a second climate entity nor
 communicates with the appliance itself.
