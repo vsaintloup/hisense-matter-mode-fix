@@ -44,6 +44,11 @@ def _patch_hisense_mode_selection(matter_climate: Any) -> None:
                 matter_climate.clusters.OnOff.Attributes.OnOff
             ) is False
         ):
+            # This appliance uses SystemMode as the startup mode. It ignores an
+            # On command while SystemMode is Off, so select Dry/Fan-only first
+            # while the appliance remains off, then turn it on.
+            await original(self, hvac_mode)
+
             on_off_attribute = matter_climate.clusters.OnOff.Attributes.OnOff
             # OnOff is a command cluster: use its On command rather than trying
             # to write its state attribute. The latter can leave this appliance
@@ -54,6 +59,8 @@ def _patch_hisense_mode_selection(matter_climate: Any) -> None:
                 attribute=on_off_attribute,
             )
             self._endpoint.set_attribute_value(on_off_path, True)
+            self._update_from_device()
+            return
 
         await original(self, hvac_mode)
 
