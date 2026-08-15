@@ -45,7 +45,10 @@ def _patch_hisense_mode_selection(matter_climate: Any) -> None:
             ) is False
         ):
             on_off_attribute = matter_climate.clusters.OnOff.Attributes.OnOff
-            await self.write_attribute(value=True, matter_attribute=on_off_attribute)
+            # OnOff is a command cluster: use its On command rather than trying
+            # to write its state attribute. The latter can leave this appliance
+            # reporting Dry without actually starting its compressor/fan.
+            await self.send_device_command(matter_climate.clusters.OnOff.Commands.On())
             on_off_path = matter_climate.create_attribute_path_from_attribute(
                 endpoint_id=self._endpoint.endpoint_id,
                 attribute=on_off_attribute,
