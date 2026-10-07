@@ -1,3 +1,5 @@
+# THIS FIX IS NO LONGER NECESSARY: Since the PR was merged, see: https://github.com/home-assistant/core/pull/184589
+
 # Hisense Matter Mode Fix
 
 Temporary HACS integration for the Hisense AP1024TW1LA portable air conditioner
